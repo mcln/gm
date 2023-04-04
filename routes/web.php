@@ -1,28 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\ImageController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/sectors/{sector?}', [ExerciseController::class, 'sector'])->name('exercises.sector');
+
+Route::get('/chapters/{chapter?}', [ExerciseController::class, 'chapter'])->name('exercises.chapter');
+
+Route::get('/sections/{section?}', [ExerciseController::class, 'section'])->name('exercises.section');
+
+Route::get('/items/{item?}', [ExerciseController::class, 'item'])->name('exercises.item');
+
+Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('exercises.show');
+
+
+Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
+
+
+
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
+{
+    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () 
+{
+    Route::post('/exercise-comments', [ExerciseController::class, 'comments_store'])->name('exercise.comments_store');
+    Route::delete('/comments/{comment?}', [ExerciseController::class, 'comments_destroy'])->name('exercise.comments_destroy');
+    Route::post('/exercise/{exercise}/report', [ExerciseController::class, 'exercise_report'])->name('exercise.report');
 });
