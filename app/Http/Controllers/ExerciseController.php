@@ -69,7 +69,6 @@ class ExerciseController extends Controller
         $next_exercise = Exercise::where('id', '>', $exercise->id)->orderBy('id', 'asc')->first();
 
 
-
         // Obtener el usuario autenticado
             $user = Auth::user();
 
@@ -123,11 +122,8 @@ class ExerciseController extends Controller
                 session(['previous_exercise_id' => $exercise->id]);
             } 
 
-
-
-
         // Cargar cantidad de "me gusta" del ejercicio
-        $exercise->loadCount('exercise_likes');
+        /* $exercise->loadCount('exercise_likes'); */
 
         // Incrementa la cantidad de visualizaciones del ejercicio
         $exercise->increment('view_count');

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\ExerciseUserController;
 use App\Http\Controllers\ImageController;
 
 Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
@@ -16,14 +17,13 @@ Route::get('/items/{item?}', [ExerciseController::class, 'item'])->name('exercis
 
 Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('exercises.show');
 
-
 Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
 
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
 {
-    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    Route::get('exerciseuser', [ExerciseUserController::class, 'index'])->name('exerciseuser.index');
     
 });
 

@@ -15,6 +15,7 @@ class Exercise extends Model
         'slug',
         'active',
         'order',
+        'likes',
         'view_count'
     ];
 
@@ -65,6 +66,12 @@ class Exercise extends Model
         return $this->hasMany('App\Models\Exercise_like');
 
     }
+
+    public function getLikesCountAttribute()
+    {
+        return $this->exercise_likes()->count();
+    }
+
 
     //relacion 1 a muchos
     public function exercise_reports(){
