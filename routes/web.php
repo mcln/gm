@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\ExerciseUserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Livewire\ExerciseUser;
 
 Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
 
@@ -23,7 +23,7 @@ Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
 {
-    Route::get('exerciseuser', [ExerciseUserController::class, 'index'])->name('exerciseuser.index');
+    Route::get('exerciseuser', ExerciseUser::class)->name('exerciseuser.index');
     
 });
 

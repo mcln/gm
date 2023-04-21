@@ -9,6 +9,13 @@ class Exercise_user extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'exercise_id',
+        'score',
+        'directory', 
+    ];
+
     //relacion 1 a muchos (inversa)
     public function user(){
 
