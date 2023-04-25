@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ContactoController;
 use App\Http\Livewire\ExerciseUser;
+
 
 Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
 
@@ -19,12 +21,13 @@ Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('e
 
 Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
 
+Route::get('planes', [ImageController::class, 'planes'])->name('planes');
+
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
 {
     Route::get('exerciseuser', ExerciseUser::class)->name('exerciseuser.index');
-    
 });
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () 
@@ -33,3 +36,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::delete('/comments/{comment?}', [ExerciseController::class, 'comments_destroy'])->name('exercise.comments_destroy');
     Route::post('/exercise/{exercise}/report', [ExerciseController::class, 'exercise_report'])->name('exercise.report');
 });
+
+Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.mostrarFormulario');
+Route::post('/contacto', [ContactoController::class, 'enviarMensaje'])->name('contacto.enviarMensaje');

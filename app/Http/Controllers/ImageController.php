@@ -15,4 +15,9 @@ class ImageController extends Controller
         // Pasar la imagen a la vista
         return view('nosotros', compact('image', 'image2'));
     }
+
+    public function planes()
+    {
+        return view('planes');
+    }
 }

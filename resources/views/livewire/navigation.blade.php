@@ -8,15 +8,21 @@
             'active' => request()->routeIs('exercises.index')
         ],
         [
-            'name' => 'Contacto',
-            'route' => '#',
-            'active' => request()->routeIs('contacto')
-        ],
-        [
             'name' => 'Nosotros',
             'route' => route('nosotros'),
             'active' => request()->routeIs('nosotros')
         ]    
+        ,
+        [
+            'name' => 'Planes',
+            'route' => route('planes'),
+            'active' => request()->routeIs('planes')
+        ],
+        [
+            'name' => 'Contacto',
+            'route' => route('contacto.mostrarFormulario'),
+            'active' => request()->routeIs('contacto.mostrarFormulario')
+        ] 
     ];
 @endphp
 
