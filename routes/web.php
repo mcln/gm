@@ -6,8 +6,9 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Livewire\ExerciseUser;
 
+Route::get('/', function () {return view('enconstruccion');});
 
-Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
+Route::get('index', [ExerciseController::class, 'index'])->name('exercises.index'); 
 
 Route::get('/sectors/{sector?}', [ExerciseController::class, 'sector'])->name('exercises.sector');
 

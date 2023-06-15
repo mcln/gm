@@ -36,17 +36,20 @@
 
             @php $totalCount = $exercises->firstItem() - 1; @endphp
             @foreach ($exercises as $exercise) 
-
+                
                 <div class="relative">
-                    <div class="absolute top-1/2 left-3 flex items-center justify-center w-6 h-6 bg-gray-500 rounded-full text-white font-bold" style="top: 1rem;">
+                    <div class="absolute top-1/2 left-3 flex items-center justify-center w-6 h-6 bg-gray-500 rounded-full text-white font-bold transform -translate-y-1/2" style="margin: auto;">
                         {{ $totalCount + $loop->iteration }}
                     </div>
-                    <a href="{{ route('exercises.show', $exercise) }}" class="h-14 shadow-xl rounded-lg w-400 h-300 flex items-center" style="background-image: url({{ asset(Storage::url($background_image->image_path)) }})">
-                        <img src="{{ asset(Storage::url($exercise->Header_exercise->image_path)) }}" alt="" class="ml-10">  
+                    <a href="{{ route('exercises.show', $exercise) }}" class="shadow-xl rounded-lg w-400 flex items-center" style="background-image: url({{ asset(Storage::url($background_image->image_path)) }})">
+                        @if ($exercise->Header_exercise)
+                            <img src="{{ asset(Storage::url($exercise->Header_exercise->image_path)) }}" alt="" class="ml-10"> 
+                        @endif 
                     </a>
                 </div>
                 
             @endforeach
+            
         </div>
     
         <div class="mt-4">
