@@ -72,10 +72,10 @@
             <div class="flex flex-row justify-center items-center mt-4">
 
             </div>
-            <div class="image-section h-14 rounded-lg w-400 h-300 flex items-center"
+            <div class="image-section rounded-lg w-400 flex items-center"
                 style="background-image: url({{ asset(Storage::url($background_cuadros->image_path ?? '')) }})">
                 @empty(!$header_exercise)
-                    <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10">
+                    <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10" oncontextmenu="return false;">
                 @endempty
             </div>
 
@@ -92,7 +92,7 @@
                     style="background-image: url({{ asset(Storage::url($background_cuaderno->image_path ?? '')) }})">
                     @if (!empty($development_exercise))
                         <img src="{{ asset(Storage::url($development_exercise->image_path)) }}" alt=""
-                            class="ml-12">
+                            class="ml-12" oncontextmenu="return false;">
                     @endif
                 </div>
             @endforeach

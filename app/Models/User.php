@@ -135,4 +135,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Exercise_user_duration');
 
     }
+
+    //METODO PARA ADMINLTE
+    public function adminlte_desc(){
+        return "Administrador";
+    }
+
+    public function adminlte_profile_url(){
+        return 'user/profile';
+    }
 }
