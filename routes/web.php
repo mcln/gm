@@ -5,6 +5,9 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Livewire\ExerciseUser;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {return view('enconstruccion');});
 
@@ -40,3 +43,29 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
 Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.mostrarFormulario');
 Route::post('/contacto', [ContactoController::class, 'enviarMensaje'])->name('contacto.enviarMensaje');
+
+//google oauth
+
+Route::get('/login-google', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('/google-callback', function () {
+    $user = Socialite::driver('google')->user();
+    $userExists = User::where('external_id', $user->id)->where('external_auth','google')->first();
+
+    if ($userExists){
+        Auth::login($userExists);
+    } else {
+        $userNew = User::create([
+            'name' => $user->name,
+            'email'=> $user->email,
+            'avatar'=> $user->avatar,
+            'external_id'=> $user->id,
+            'external_auth'=> 'google',
+        ]);
+
+        Auth::login($userNew);
+    }
+    return redirect('/index');
+});

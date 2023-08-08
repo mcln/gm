@@ -34,6 +34,18 @@ return [
     'mercadopago' => [
         'key' => env('MP_PUBLIC_KEY'),
         'token' => env('MP_ACCESS_TOKEN'),
-    ]
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_OAUTH_ID'),
+        'client_secret' => env('GOOGLE_OAUTH_KEY'),
+        'redirect' => '/google-callback',
+    ],
+
+    'facebook' => [    
+        'client_id' => env('FACEBOOK_CLIENT_ID'),  
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),  
+        'redirect' => env('FACEBOOK_REDIRECT_URI') 
+      ],
 
 ];
