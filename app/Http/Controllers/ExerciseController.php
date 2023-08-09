@@ -201,7 +201,7 @@ class ExerciseController extends Controller
         $comment->comment_content = $request->comment_content;
         $comment->user_id = Auth::id();
         $comment->exercise_id = $request->exercise_id;
-        $comment->parent_id = $request->parent_id;
+        $comment->parent_id = $request->parent_id; //hay un error con este parent_id
         $comment->save();
 
         return redirect()->back();

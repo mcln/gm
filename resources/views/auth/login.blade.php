@@ -46,9 +46,14 @@
         </form>
 
         <br>
-        <a href="/login-google" class="flex items-center justify-center py-2 px-4 bg-red-500 hover:bg-blue-700 text-white rounded transition-colors font-roboto">
+        <a href="/auth/google" class="flex items-center justify-center py-2 px-4 bg-red-500 hover:bg-red-700 text-white rounded transition-colors font-roboto">
             <span class="bg-cover w-6 h-6 mr-2" style="background-image: url('https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg')"></span>
             Iniciar sesión con Google
+          </a>
+          <br>
+          <a href="/auth/facebook" class="flex items-center justify-center py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors font-roboto">
+            <span class="bg-cover w-6 h-6 mr-2" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/240px-Facebook_logo_%28square%29.png')"></span>
+            Iniciar sesión con Facebook
           </a>
     </x-authentication-card>
 </x-guest-layout>
