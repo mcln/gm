@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77237fbd206a7ebfd3ac87ab1bc34a6d",
+    "content-hash": "9eef57223e17f43844e01417694982fc",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,64 +48,6 @@
                 "source": "https://github.com/ColorlibHQ/AdminLTE/tree/v3.2.0"
             },
             "time": "2022-02-07T20:33:09+00:00"
-        },
-        {
-            "name": "amendozaaguiar/laravel-lat-es",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/amendozaaguiar/laravel-lat-es.git",
-                "reference": "760184805992a43b70d3c53bdfbe4dc987a74a43"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/amendozaaguiar/laravel-lat-es/zipball/760184805992a43b70d3c53bdfbe4dc987a74a43",
-                "reference": "760184805992a43b70d3c53bdfbe4dc987a74a43",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": ">=5.4.0",
-                "illuminate/support": ">=5.4.0",
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Amendozaaguiar\\Laravellates\\LaravelLatEsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Amendozaaguiar\\Laravellates\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anderson Mendoza",
-                    "homepage": "https://amendozaaguiar.dev",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Paquete de traducciones en español para Laravel 9, 10. Este paquete te agrega a tu proyecto los ficheros de traducciones en español que Laravel 9, 10 trae por defecto.",
-            "homepage": "https://github.com/amendozaaguiar/laravel-lat-es",
-            "keywords": [
-                "Espanol",
-                "laravel",
-                "spanish",
-                "traduccion",
-                "translation"
-            ],
-            "support": {
-                "issues": "https://github.com/amendozaaguiar/laravel-lat-es/issues",
-                "source": "https://github.com/amendozaaguiar/laravel-lat-es/tree/2.4.0"
-            },
-            "time": "2023-02-11T15:07:44+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",

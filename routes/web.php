@@ -5,46 +5,8 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Livewire\ExerciseUser;
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\WebhooksController;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-
-Route::get('/prueba', function (){
-   /*  $permisos = Permission::create([
-        "name" => 'acceso dashboard'
-    ]); */
-
-    /* $Role = Role::create([
-        'name' => 'admin'
-    ]);
-
-    $Role2 = Role::create([
-        'name' => 'Suscrito'
-    ]);
-
-    $Role->givePermissionTo('acceso dashboard');
-    return 'ok'; */
-
-    /* $permisos = Permission::create([
-        "name" => 'acceso admin'
-    ]);
-
-    $permisos2 = Permission::create([
-        "name" => 'acceso mas ejercicios'
-    ]); */
-
-    /* $Role = Role::find('1');
-    $Role->syncPermissions([
-        'acceso dashboard','acceso admin','acceso mas ejercicios'
-    ]); */
-
-    $user = User::where('email', 'cristobal.lobos@gmail.com')->first();
-    $user->syncRoles(['admin']);
-});
 
 Route::get('/', function () {return view('enconstruccion');});
 Route::get('index', [ExerciseController::class, 'index'])->name('exercises.index'); 
@@ -56,6 +18,7 @@ Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('e
 Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
 Route::get('planes', [ImageController::class, 'planes'])->name('planes');
 
+//PAGOS
 Route::get('orders/{order}/payment', [OrderController::class, 'payment'])->name('orders.payment');
 Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 //MercadoPago Webhook
