@@ -9,16 +9,21 @@ class Exercise_comment extends Model
 {
     use HasFactory;
 
-    //relacion 1 a muchos (inversa)
-    public function user(){
-
-        return $this->belongsTo('App\Models\User');
-
+    public function exercise_comments()
+    {
+        return $this->hasMany(Exercise_comment::class, 'parent_id');
     }
 
-    public function exercise(){
- 
-        return $this->belongsTo('App\Models\Exercise');
+    //relacion 1 a muchos (inversa)
+    public function user()
+    {
 
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function exercise()
+    {
+
+        return $this->belongsTo('App\Models\Exercise');
     }
 }

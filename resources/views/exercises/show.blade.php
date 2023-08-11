@@ -75,7 +75,8 @@
             <div class="image-section rounded-lg w-400 flex items-center"
                 style="background-image: url({{ asset(Storage::url($background_cuadros->image_path ?? '')) }})">
                 @empty(!$header_exercise)
-                    <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10" oncontextmenu="return false;">
+                    <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10"
+                        oncontextmenu="return false;">
                 @endempty
             </div>
 
@@ -99,47 +100,165 @@
         </div>
 
         @if (Auth::check())
-            <form method="POST" action="{{ route('exercise.comments_store') }}">
+            <form method="POST" action="{{ route('exercise.comments_store') }}" class="flex flex-col">
                 @csrf
                 <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
-                <div class="flex flex-col mb-4">
-                    <label for="comment_content" class="mb-2 font-bold text-azul-oscuro text-xs">Agrega un
-                        comentario:</label>
-                    <textarea name="comment_content" id="comment_content" rows="1"
-                        class="text-xs px-3 py-2 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                <div class="flex items-start mb-2">
+                    @if ($user->profile_photo_path)
+                        <img src="{{ asset(Storage::url($user->profile_photo_path)) }}"
+                            alt="Foto de perfil de {{ $user->name }}" class="w-6 h-6 rounded-full mr-2">
+                    @endif
+                    <div class="relative flex-grow">
+                        <textarea name="comment_content" id="comment_content" rows="1"
+                            class="text-xs px-2 py-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500 w-full"
+                            placeholder="Agrega un comentario..."></textarea>
+                        <div class="flex justify-end space-x-1">
+                            <button type="button" id="cancelButton"
+                                class="text-xs bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-full hidden">Cancelar</button>
+                            <button type="submit" id="commentButton"
+                                class="text-xs bg-azul-semi hover:bg-azul-electrico text-white font-bold py-1 px-2 rounded-full hidden">Comentar</button>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit"
-                    class="text-xs flex items-center bg-azul-semi hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full mr-4">Comentar</button>
             </form>
         @endif
 
         @if ($exercise->exercise_comments)
-
-            <div class="mt-8">
-                @foreach ($exercise->exercise_comments as $comment)
-                    <div class="flex items-start mb-4">
-                        <div class="mr-2"> <img src="{{ asset(Storage::url($comment->user->profile_photo_path)) }}"
-                                alt="Foto de perfil de {{ $comment->user->name }}" class="w-6 h-6 rounded-full"> </div>
+            @foreach ($exercise->exercise_comments->sortByDesc(function ($comment) {
+        return [$comment->exercise_comments->count(), $comment->created_at];
+    }) as $comment)
+                <!-- Mostrar solo los comentarios principales -->
+                @if (empty($comment->parent_id))
+                    <div class="comment flex items-start">
+                        <div class="mr-2">
+                            <img src="{{ asset(Storage::url($comment->user->profile_photo_path)) }}"
+                                alt="Foto de perfil de {{ $comment->user->name }}" class="w-6 h-6 rounded-full">
+                        </div>
                         <div class="flex-1">
                             <div class="flex items-center mb-1">
                                 <p class="mr-2 font-bold text-xs text-azul-oscuro">{{ $comment->user->name }}</p>
                                 <p class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
                             </div>
-                            <p class="text-gray-900 text-xs">{{ $comment->comment_content }}</p>
-                            <form method="POST" action="{{ route('exercise.comments_store') }}"> @csrf <input
-                                    type="hidden" name="parent_id" value="{{ $comment->id }}">
-                                <textarea name="comment_content" rows="3" class="form-control"></textarea> <button class="btn btn-primary mt-3">Responder</button>
-                            </form> @auth @if ($comment->user_id == Auth::user()->id)
-                                <form action="{{ route('exercise.comments_destroy', $comment->id) }}" method="POST">
-                                    @csrf @method('DELETE') <button type="submit"
-                                        class="text-xs text-red-500 hover:text-red-700 focus:outline-none"> Eliminar
-                                        comentario </button> </form>
-                            @endif @endauth
+                            <div class="comment-content text-xs mb-1">
+                                <p>{{ $comment->comment_content }}</p>
+                            </div>
+                            <div class="comment-actions">
+                                <div class="flex items-center mb-2">
+                                    @if ($comment->exercise_comments->count() > 0)
+                                        <button
+                                            class="toggle-replies text-xs flex items-center bg-transparent hover:bg-azul-claro text-azul-oscuro font-bold py-1 px-3 rounded-full">
+                                            {{ $comment->exercise_comments->count() }} respuestas
+                                        </button>
+                                    @endif
+                                    <button
+                                        class="toggle-reply-form text-xs flex items-center bg-transparent hover:bg-azul-claro text-azul-oscuro font-bold py-1 px-3 rounded-full">
+                                        Responder
+                                    </button>
+                                </div>
+                                <div class="replies-container hidden ml-8">
+                                    @foreach ($comment->exercise_comments as $reply)
+                                        @if (!empty($reply->parent_id))
+                                            <div class="comment flex items-start mb-4">
+                                                <div class="mr-2">
+                                                    <img src="{{ asset(Storage::url($reply->user->profile_photo_path)) }}"
+                                                        alt="Foto de perfil de {{ $reply->user->name }}"
+                                                        class="w-6 h-6 rounded-full">
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-center mb-1">
+                                                        <p class="mr-2 font-bold text-xs text-azul-oscuro">
+                                                            {{ $reply->user->name }}
+                                                        </p>
+                                                        <p class="text-xs text-gray-500">
+                                                            {{ $reply->created_at->diffForHumans() }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        <p>{{ $reply->comment_content }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <form method="POST" action="{{ route('exercise.comments_store') }}"
+                                    class="reply-form hidden">
+                                    @csrf
+                                    <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
+                                    <div class="relative flex-grow">
+                                        <textarea name="comment_content" rows="1"
+                                            class="text-xs px-2 py-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500 w-full"
+                                            placeholder="Agrega una respuesta..."></textarea>
+                                    </div>
+                                    <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                    <div class="flex justify-end space-x-1">
+                                        <button type="button"
+                                            class="cancel-button text-xs bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-full">Cancelar</button>
+                                        <button type="submit"
+                                            class="comment-button text-xs bg-azul-semi hover:bg-azul-electrico text-white font-bold py-1 px-2 rounded-full">Comentar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                @endif
+            @endforeach
         @endif
-
     </div>
 </x-AppLayout>
+
+<script src="https://kit.fontawesome.com/{YOUR_FONTAWESOME_KIT_ID}.js" crossorigin="anonymous"></script>
+
+{{-- Botón mostrar respuestas y botón responder --}}
+<script>
+    var toggleButtons = document.querySelectorAll('.toggle-replies');
+    toggleButtons.forEach(function(button) {
+        var originalText = button.textContent.trim();
+        var count = parseInt(button.textContent);
+        button.addEventListener('click', function() {
+            var container = button.parentNode.nextElementSibling;
+            container.classList.toggle('hidden');
+            if (container.classList.contains('hidden')) {
+                button.textContent = originalText;
+            } else {
+                button.textContent = count + ' respuestas';
+            }
+        });
+    });
+
+    var replyButtons = document.querySelectorAll('.toggle-reply-form');
+    replyButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var form = button.closest('.comment').querySelector('.reply-form');
+            form.classList.toggle('hidden');
+        });
+    });
+
+    var cancelButtons = document.querySelectorAll('.cancel-button');
+    cancelButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var form = button.parentNode.parentNode;
+            form.classList.add('hidden');
+        });
+    });
+</script>
+
+{{-- botones cancelar y comentar del comentario principal --}}
+
+<script>
+    const commentContent = document.getElementById('comment_content');
+    const cancelButton = document.getElementById('cancelButton');
+    const commentButton = document.getElementById('commentButton');
+
+    commentContent.addEventListener('input', function() {
+        const hasContent = commentContent.value.trim() !== '';
+        cancelButton.classList.toggle('hidden', !hasContent);
+        commentButton.classList.toggle('hidden', !hasContent);
+    });
+
+    cancelButton.addEventListener('click', function() {
+        commentContent.value = '';
+        cancelButton.classList.add('hidden');
+        commentButton.classList.add('hidden');
+    });
+</script>

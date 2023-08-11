@@ -9,7 +9,7 @@ use App\Models\Exercise_comment;
 use App\Models\Exercise_report;
 use App\Models\Exercise_visualization;
 use App\Models\Exercise_visualization_unregistered;
-use App\Models\header_exercise;
+use App\Models\Header_exercise;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Section;
@@ -67,6 +67,7 @@ class ExerciseController extends Controller
         $background_cuadros = Image::where('name', 'fondo_cuadriculado')->first();
         $header_exercise = Header_exercise::where('exercise_id', $exercise->id)->first();
         $development_exercises = Development_exercise::where('exercise_id', $exercise->id)->oldest()->get();
+        $user = Auth::user();
 
         $previous_exercise = Exercise::where('id', '<', $exercise->id)->orderBy('id', 'desc')->first();
         $next_exercise = Exercise::where('id', '>', $exercise->id)->orderBy('id', 'asc')->first();
@@ -186,7 +187,7 @@ class ExerciseController extends Controller
             }
         }
 
-        return view('exercises.show', compact('exercise', 'background_cuaderno', 'background_cuadros', 'header_exercise', 'development_exercises', 'previous_exercise', 'next_exercise'));
+        return view('exercises.show', compact('user','exercise', 'background_cuaderno', 'background_cuadros', 'header_exercise', 'development_exercises', 'previous_exercise', 'next_exercise'));
     }
 
     public function comments_store(Request $request)
@@ -194,7 +195,7 @@ class ExerciseController extends Controller
         $request->validate([
             'comment_content' => 'required|string|max:255',
             'exercise_id' => 'required|exists:exercises,id',
-            'parent_id' => 'required|exists:exercise_comments,id',
+            'parent_id' => ($request->has('parent_id')) ? 'exists:exercise_comments,id' : 'nullable',
         ]);
 
         $comment = new Exercise_comment();
@@ -203,6 +204,10 @@ class ExerciseController extends Controller
         $comment->exercise_id = $request->exercise_id;
         $comment->parent_id = $request->parent_id; //hay un error con este parent_id
         $comment->save();
+
+        // Obtener el ejercicio relacionado con el comentario
+        $exercise = Exercise::find($request->exercise_id);
+        $exercise->load('exercise_comments');
 
         return redirect()->back();
     }
