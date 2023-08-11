@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Exercise extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'id',
@@ -105,4 +107,12 @@ class Exercise extends Model
         return $this->hasMany('App\Models\Exercise_user_duration');
 
     }
+
+    public function toSearchableArray()
+{
+    return [
+        'id' => (int) $this->id,
+        'slug' => $this->slug,
+    ];
+}
 }
