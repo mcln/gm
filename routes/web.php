@@ -7,9 +7,15 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Livewire\ExerciseUser;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\WebhooksController;
+use App\Http\Controllers\SearchController;
+
 
 Route::get('/', function () {return view('enconstruccion');});
-Route::get('index', [ExerciseController::class, 'index'])->name('exercises.index'); 
+Route::get('/index', [ExerciseController::class, 'index'])->name('exercises.index'); 
+
+/* buscador */
+Route::get('/search', [SearchController::class, 'searchExercises'])->name('search');
+
 Route::get('/sectors/{sector?}', [ExerciseController::class, 'sector'])->name('exercises.sector');
 Route::get('/chapters/{chapter?}', [ExerciseController::class, 'chapter'])->name('exercises.chapter');
 Route::get('/sections/{section?}', [ExerciseController::class, 'section'])->name('exercises.section');

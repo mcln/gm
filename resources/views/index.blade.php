@@ -1,15 +1,5 @@
 <x-AppLayout>
 
-    {{-- <div class="flex flex-col justify-center items-center">
-        <video autoplay muted loop class="w-full h-full object-cover">
-            <source src="https://res.cloudinary.com/dbltc2gr7/video/upload/v1682449858/videomath2_kbyb8e.mp4" type="video/mp4">
-        </video>
-        <h1 class="text-6xl text-white text-center font-bold px-20 sm:px-4 sm:absolute sm:inset-0 bg-guiamath-bg dark:text-white">
-            Ejercicios Resueltos de Matemáticas para Ingeniería
-        </h1>
-    </div> --}}
-
-
     <div class="w-full bg-azul-semi"> <video autoplay muted loop class="inset-0 w-full h-full object-cover"
             style="z-index: -1;">
             <source src="https://res.cloudinary.com/dbltc2gr7/video/upload/v1682449858/videomath2_kbyb8e.mp4"
@@ -69,6 +59,13 @@
         </tr>
     </table>
 
+    {{-- Buscador de ejercicios --}}
+{{--     <form method="GET">
+        <div class="input-group mb-3">
+            <input type="text" name="search" value="{{ request()->get('search')}}" class="form-control" placeholder="Busca ejercicios de..." aria-label="Search" aria-describedby="button-addon2">
+            <button class="btn btn-success" type="submit" id="button-addon2">Buscador</button>
+        </div>
+    </form> --}}
 
 
     <div class="my-8 flex justify-center">

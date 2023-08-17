@@ -24,7 +24,6 @@ class ExerciseController extends Controller
 
     public function index()
     {
-
         $sectors = Sector::orderBy('id')->get();
 
         return view('index', compact('sectors'));

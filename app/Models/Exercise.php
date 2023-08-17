@@ -22,51 +22,51 @@ class Exercise extends Model
     ];
 
     //relacion 1 a muchos
-    public function exercise_comments(){
+    public function exercise_comments()
+    {
 
         return $this->hasMany('App\Models\Exercise_comment');
-
     }
 
     //relacion 1 a 1
-    public function item(){
+    public function item()
+    {
 
         return $this->belongsTo('App\Models\Item');
-
     }
     //relacion 1 a 1
-    public function Header_exercise(){
+    public function Header_exercise()
+    {
 
         return $this->hasOne('App\Models\Header_exercise');
-
-    }    
-
-    //relacion 1 a muchos
-    public function development_exercises(){
-
-        return $this->hasMany('App\Models\Development_exercise');
-
-    }  
-
-    //relacion 1 a muchos
-    public function video_exercises(){
-
-        return $this->hasMany('App\Models\Video_exercise');
-
-    }  
-
-    //relacion 1 a muchos
-    public function exercise_users(){
-
-        return $this->hasMany('App\Models\Exercise_user');
-
     }
 
     //relacion 1 a muchos
-    public function exercise_likes(){
+    public function development_exercises()
+    {
+
+        return $this->hasMany('App\Models\Development_exercise');
+    }
+
+    //relacion 1 a muchos
+    public function video_exercises()
+    {
+
+        return $this->hasMany('App\Models\Video_exercise');
+    }
+
+    //relacion 1 a muchos
+    public function exercise_users()
+    {
+
+        return $this->hasMany('App\Models\Exercise_user');
+    }
+
+    //relacion 1 a muchos
+    public function exercise_likes()
+    {
 
         return $this->hasMany('App\Models\Exercise_like');
-
     }
 
     public function getLikesCountAttribute()
@@ -76,24 +76,24 @@ class Exercise extends Model
 
 
     //relacion 1 a muchos
-    public function exercise_reports(){
+    public function exercise_reports()
+    {
 
         return $this->hasMany('App\Models\Exercise_report');
-
     }
 
     //relacion 1 a muchos
-    public function exercise_visualizations(){
+    public function exercise_visualizations()
+    {
 
         return $this->hasMany('App\Models\Exercise_visualization');
-
     }
 
     //relacion 1 a muchos
-    public function images(){
+    public function images()
+    {
 
         return $this->hasMany('App\Models\Image');
-
     }
 
     public function exerciseVisualizationsUnregistered()
@@ -101,18 +101,17 @@ class Exercise extends Model
         return $this->hasMany('App\Models\Exercise_visualization_unregistered');
     }
 
-     //relacion 1 a muchos
-     public function exercise_user_durations(){
+    //relacion 1 a muchos
+    public function exercise_user_durations()
+    {
 
         return $this->hasMany('App\Models\Exercise_user_duration');
-
     }
 
     public function toSearchableArray()
-{
-    return [
-        'id' => (int) $this->id,
-        'slug' => $this->slug,
-    ];
-}
+    {
+        return [
+            'slug' => $this->slug,
+        ];
+    }
 }
