@@ -32,6 +32,11 @@ class User extends Authenticatable
         'avatar',
         'external_id',
         'external_auth',
+        'type',
+        'username',
+        'nationality',
+        'university_name',
+        'degree_name',
     ];
 
     /**
@@ -67,8 +72,13 @@ class User extends Authenticatable
     //relacion 1 a 1
     public function address(){
 
-        //$address = Address::where('user_id', $this->id)->first(); es lo mismo que lo escrito abajo
         return $this->hasOne('App\Models\Address');
+
+    }
+
+    public function country(){
+
+        return $this->hasOne('App\Models\Country');
 
     }
 
@@ -138,6 +148,13 @@ class User extends Authenticatable
     public function exercise_user_durations(){
 
         return $this->hasMany('App\Models\Exercise_user_duration');
+
+    }
+
+    //relacion 1 a muchos
+    public function upload_exercises(){
+
+        return $this->hasMany('App\Models\Exercise_comment');
 
     }
 

@@ -8,7 +8,7 @@ use App\Http\Livewire\ExerciseUser;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\SearchController;
-
+use App\Http\Controllers\UploadExerciseController;
 
 Route::get('/', function () {return view('enconstruccion');});
 Route::get('/index', [ExerciseController::class, 'index'])->name('exercises.index'); 
@@ -35,6 +35,17 @@ Route::get('orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
 {
     Route::get('exerciseuser', ExerciseUser::class)->name('exerciseuser.index');
+});
+
+//cloudinary exercises
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::get('exercise/upload', [UploadExerciseController::class, 'showUploadForm'])->name('upload.show');
+    Route::post('exercise/upload', [UploadExerciseController::class, 'upload'])->name('upload.upload');
+
+    //vista de ejercicios enviados para alumnos
+    Route::get('exercise/upload/user', [UploadExerciseController::class, 'uploadUser'])->name('exercises.uploadUser');
+    //vista de ejercicios enviados para alumnos
+    Route::get('exercise/upload/teacher', [UploadExerciseController::class, 'uploadTeacher'])->name('exercises.uploadTeacher');
 });
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () 

@@ -15,9 +15,15 @@ class Country extends Model
 
     }
 
-    public function currency(){
+    public function currencies(){
 
         return $this->hasMany('App\Models\Currency');
+
+    }
+
+    public function users(){
+
+        return $this->hasMany('App\Models\User');
 
     }
 }
