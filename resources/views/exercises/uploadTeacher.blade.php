@@ -1,40 +1,61 @@
 <x-app-layout>
-    <div class="flex flex-col justify-start items-center h-screen">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-8">
 
-        <h1 class="text-2xl font-bold mt-8 mb-4">Ejercicios a resolver</h1>
+        <h1 class="text-4xl font-bold mt-8 mb-4">Postula y resuelve ejercicios</h1>
 
-        <table class="w-full max-w-4xl border border-gray-300">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 border-b border-r text-center align-middle">Nombre</th>
-                    <th class="px-4 py-2 border-b border-r text-center align-middle">Imagen</th>
-                    <th class="px-4 py-2 border-b text-center align-middle">Fecha de Subida</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($ejercicios as $ejercicio)
-                    <tr>
-                        <td class="px-4 py-2 border-b border-r text-center align-middle">{{ $ejercicio->name }}</td>
-                        <td class="px-4 py-2 border-b border-r text-center align-middle">
-                            <div class="flex items-center justify-center">
-                                <img src="{{ $ejercicio->url }}" alt="Imagen del ejercicio"
-                                    class="w-24 h-24 rounded-md object-cover cursor-pointer"
-                                    id="imagen-{{ $ejercicio->id }}">
-                            </div>
-                        </td>
-                        <td class="px-4 py-2 border-b text-center align-middle">
-                            <p class="text-xs text-gray-500">{{ $ejercicio->created_at->diffForHumans() }}</p>
-                            {{ $ejercicio->created_at->format('H:i') }} - {{ $ejercicio->created_at->format('d/m/y') }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <div id="imagen-ampliada" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
-            <img src="" alt="Imagen ampliada" id="imagen-ampliada-src" class="max-w-full max-h-full">
+        <div class="grid grid-cols-2 gap-4">
+            @foreach ($ejercicios as $ejercicio)
+                @if ($ejercicio->teacher !== null || now() < \Carbon\Carbon::parse($ejercicio->time_max_accept))
+                    <div class="border rounded-lg border-azul-bonito">
+                        <table class="min-w-full">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img src="{{ $ejercicio->url }}" alt="Imagen del ejercicio"
+                                            class="m-2 w-28 h-28 rounded-md object-cover cursor-pointer"
+                                            id="imagen-{{ $ejercicio->id }}">
+                                    </div>
+                                    <div id="imagen-ampliada"
+                                        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+                                        <img src="" alt="Imagen ampliada" id="imagen-ampliada-src"
+                                            class="max-w-full max-h-full">
+                                    </div>
+                                </td>
+                                <td class="align-top">
+                                    @foreach ($users->where('id', $ejercicio->user_id) as $user)
+                                        <p><b>Enviado por:</b>
+                                            @if ($user->username)
+                                                {{ $user->username }}
+                                            @else
+                                                {{ $user->name }}
+                                            @endif
+                                        </p>
+                                    @endforeach
+                                    <p><b>Fecha límite:</b>
+                                        {{ \Carbon\Carbon::parse($ejercicio->time_max_accept)->diffForHumans() }}
+                                        <span class="text-gray-500 text-sm italic">(para el dia
+                                            {{ \Carbon\Carbon::parse($ejercicio->time_max_accept)->format('d/m') }}
+                                            hasta las
+                                            {{ \Carbon\Carbon::parse($ejercicio->time_max_accept)->format('H:i') }})</span>
+                                    </p>
+                                    <p><b>Valor sugerido por estudiante:</b> {{ $ejercicio->suggested_value_usd }} USD
+                                    </p>
+                                    @foreach ($sectors->where('id', $ejercicio->sector_id) as $sector)
+                                        <p><b>Sector de Matemáticas:</b> {{ $sector->id }}) {{ $sector->name }}</p>
+                                    @endforeach
+                                    <p><b>Descripción:</b> {{ $ejercicio->description }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="pb-0">         
+                                    @livewire('solve-exercise-button', ['ejercicio' => $ejercicio])
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                @endif
+            @endforeach
         </div>
-
     </div>
 
     <script>

@@ -96,26 +96,13 @@
             @endif
         </div>
 
-        <!-- Tipo -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="type" value="Tipo de Usuario" />
-            <select id="type"
-                class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                wire:model.defer="state.type" autocomplete="type">
-                <option value="Estudiante">Estudiante</option>
-                <option value="Profesor">Profesor</option>
-                <option value="Ambos">Ambos</option>
-            </select>
-            <x-input-error for="type" class="mt-2" />
-        </div>
-
-        <!-- Nacionalidad -->
+        <!-- Pais de residencia -->
         @php
             $countries = \App\Models\Country::all();
         @endphp
 
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="nationality" value="Nacionalidad" />
+            <x-label for="nationality" value="Pais de Residencia" />
 
             <div class="relative">
                 <select id="nationality"
@@ -144,20 +131,33 @@
 
         <!-- Universidad o Instituto -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="university_name" value="{{ __('Universidad o Instituto') }}" />
+            <x-label for="university_name" value="{{ __('¿Donde estudias?') }}" />
             <x-input id="university_name" type="text" class="mt-1 block w-full" wire:model.defer="state.university_name"
-                autocomplete="university_name" />
+                autocomplete="university_name" placeholder="{{ __('Escribe el nombre de tu universidad o instituto') }}" />
             <x-input-error for="university_name" class="mt-2" />
         </div>
 
         <!-- Carrera -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="degree_name" value="{{ __('Carrera que estudias o titulo') }}" />
+            <x-label for="degree_name" value="{{ __('¿Que estudias?') }}" />
             <x-input id="degree_name" type="text" class="mt-1 block w-full" wire:model.defer="state.degree_name"
-                autocomplete="degree_name" />
+                autocomplete="degree_name" placeholder="{{ __('Escribe el nombre de tu carrera') }}" />
             <x-input-error for="degree_name" class="mt-2" />
         </div>
 
+        <!-- Tipo -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="type" value="Tipo de Usuario" />
+            <select id="type"
+                class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                wire:model.defer="state.type" autocomplete="type">
+                <option value="Estudiante">Estudiante</option>
+                <option value="Profesor">Profesor</option>
+                <option value="Ambos">Ambos</option>
+            </select>
+            <x-input-error for="type" class="mt-2" />
+        </div>
+        
     </x-slot>
 
     <x-slot name="actions">

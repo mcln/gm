@@ -31,13 +31,6 @@ return new class extends Migration
             $table->string('slug')->nullable(); 
             $table->string('image_header')->nullable(); 
             $table->string('image_development_1')->nullable();
-            $table->string('image_development_2')->nullable();
-            $table->string('image_development_3')->nullable();
-            $table->string('image_development_4')->nullable();
-            $table->string('image_development_5')->nullable();
-            $table->string('image_development_6')->nullable();
-            $table->string('image_development_7')->nullable();
-            $table->string('image_development_8')->nullable();
             $table->timestamps();
 
         });

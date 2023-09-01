@@ -60,15 +60,15 @@
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 
                 <!-- Logotipo -->
-                <a href="/" class="flex flex-shrink-0 items-center">
-                    <img class="block h-8 w-auto lg:hidden"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-                    <img class="hidden h-8 w-auto lg:block"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                <a href="/" class="flex items-center h-full">
+                    <img class="block h-10 w-auto lg:hidden"
+                        src="https://res.cloudinary.com/dbltc2gr7/image/upload/v1693516494/images_guiamath/logo_no_official_pri1ie.png" alt="Guiamath">
+                    <img class="hidden h-10 w-auto lg:block"
+                        src="https://res.cloudinary.com/dbltc2gr7/image/upload/v1693516494/images_guiamath/logo_no_official_pri1ie.png" alt="Guiamath">
                 </a>
                 <!-- Web menu button-->
                 <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 items-center h-full">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         @foreach ($nav_links as $nav_link)
                             <x-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">

@@ -152,9 +152,16 @@ class User extends Authenticatable
     }
 
     //relacion 1 a muchos
-    public function upload_exercises(){
+    public function upload_exercise(){
 
-        return $this->hasMany('App\Models\Exercise_comment');
+        return $this->hasMany('App\Models\UploadExercise');
+
+    }
+
+    //relacion 1 a muchos
+    public function upload_exercise_development(){
+
+        return $this->hasMany('App\Models\UploadExerciseDevelopment');
 
     }
 
