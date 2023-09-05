@@ -12,11 +12,14 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    {{-- WireUI --}}
-    {{-- @wireUiScripts
-    <script src="//unpkg.com/alpinejs" defer></script> --}}
+    {{-- Filepond --}}
+    {{-- <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"> --}}
 
-    <!-- Scripts -->
+    {{-- WireUI --}}
+    @wireUiScripts
+
+    <!-- Scripts Tailwind y Alpine -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
@@ -39,6 +42,13 @@
 
     @livewireScripts
 
+    {{-- filepond --}}
+    {{-- <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+    </script> --}}
 </body>
 
 </html>

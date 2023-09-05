@@ -12,8 +12,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UploadExerciseController;
 
 //INDEX
-/* Route::get('/', function () {return view('enconstruccion');}); */
-Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index'); 
+Route::get('/filepond', function () {return view('enconstruccion');});
+
+Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index');
 Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
 Route::get('planes', [ImageController::class, 'planes'])->name('planes');
 
@@ -32,18 +33,15 @@ Route::get('/items/{item?}', [ExerciseController::class, 'item'])->name('exercis
 Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('exercises.show');
 
 //EJERCICIOS SELECCIONADOS DE USUARIO
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function ()
-{
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('exerciseuser', ExerciseUser::class)->name('exerciseuser.index');
 });
 
 //EJERCICIOS COMENTARIOS Y REPORTES
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () 
-{
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::post('/exercise-comments', [ExerciseController::class, 'comments_store'])->name('exercise.comments_store');
     Route::delete('/comments/{comment?}', [ExerciseController::class, 'comments_destroy'])->name('exercise.comments_destroy');
     Route::post('/exercise/{exercise}/report', [ExerciseController::class, 'exercise_report'])->name('exercise.report');
-    
 });
 
 //EJERCICIOS SUBIDOS A CLOUDINARY
@@ -60,11 +58,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('exercise/upload/selected/user', [UploadExerciseController::class, 'uploadSelectedUser'])->name('exercises.uploadSelectedUser');
     //vista de ejercicios seleccionados para profesor
     Route::get('exercise/upload/selected/teacher', [UploadExerciseController::class, 'uploadSelectedTeacher'])->name('exercises.uploadSelectedTeacher');
-
 });
 
 //PERFIL PUBLICO PROFESORES
 Route::get('/user/profile/teacher/{id}', [TeacherController::class, 'show'])->name('profile.teacher');
+//EDITAR PERFIL DE PROFESORES
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::get('/update/profile/teacher/', [TeacherController::class, 'showUpdateForm'])->name('profile.showTeacher');
+    Route::post('/update/profile/teacher/', [TeacherController::class, 'updateProfileTeacher'])->name('profile.updateTeacher');
+});
 
 //PAGOS
 Route::get('orders/{order}/payment', [OrderController::class, 'payment'])->name('orders.payment');

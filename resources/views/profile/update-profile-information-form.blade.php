@@ -54,7 +54,7 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
+            <x-label for="name" label="{{ __('Name') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
                 autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
@@ -62,7 +62,7 @@
 
         <!-- Username -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="username" value="{{ __('Username') }}" />
+            <x-label for="username" label="{{ __('Username') }}" />
             <x-input id="username" type="text" class="mt-1 block w-full" wire:model.defer="state.username"
                 autocomplete="username" />
             <x-input-error for="username" class="mt-2" />
@@ -70,7 +70,7 @@
 
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="email" value="{{ __('Email') }}" />
+            <x-label for="email" label="{{ __('Email') }}" />
             <x-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email"
                 autocomplete="username" />
             <x-input-error for="email" class="mt-2" />
@@ -102,7 +102,7 @@
         @endphp
 
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="nationality" value="Pais de Residencia" />
+            <x-label for="nationality" label="Pais de Residencia" />
 
             <div class="relative">
                 <select id="nationality"
@@ -131,7 +131,7 @@
 
         <!-- Universidad o Instituto -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="university_name" value="{{ __('¿Donde estudias?') }}" />
+            <x-label for="university_name" label="{{ __('¿Donde estudias?') }}" />
             <x-input id="university_name" type="text" class="mt-1 block w-full" wire:model.defer="state.university_name"
                 autocomplete="university_name" placeholder="{{ __('Escribe el nombre de tu universidad o instituto') }}" />
             <x-input-error for="university_name" class="mt-2" />
@@ -139,7 +139,7 @@
 
         <!-- Carrera -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="degree_name" value="{{ __('¿Que estudias?') }}" />
+            <x-label for="degree_name" label="{{ __('¿Que estudias?') }}" />
             <x-input id="degree_name" type="text" class="mt-1 block w-full" wire:model.defer="state.degree_name"
                 autocomplete="degree_name" placeholder="{{ __('Escribe el nombre de tu carrera') }}" />
             <x-input-error for="degree_name" class="mt-2" />
@@ -147,7 +147,7 @@
 
         <!-- Tipo -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="type" value="Tipo de Usuario" />
+            <x-label for="type" label="Tipo de Usuario" />
             <select id="type"
                 class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                 wire:model.defer="state.type" autocomplete="type">
@@ -165,7 +165,7 @@
             {{ __('Saved.') }}
         </x-action-message>
 
-        <x-button wire:loading.attr="disabled" wire:target="photo">
+        <x-button type="submit" wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}
         </x-button>
     </x-slot>
