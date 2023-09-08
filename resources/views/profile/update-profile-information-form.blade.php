@@ -23,7 +23,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-                <x-label for="photo" value="{{ __('Photo') }}" />
+                <x-label for="photo" label="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
@@ -48,13 +48,13 @@
                     </x-secondary-button>
                 @endif
 
-                <x-input-error for="photo" class="mt-2" />
+                <x-input-error for="photo" class="mt-2">Debe ser una imagen</x-input-error>
             </div>
         @endif
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" label="{{ __('Name') }}" />
+            <x-label for="name" label="{{ __('Nombre y Apellido') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
                 autocomplete="name" />
             <x-input-error for="name" class="mt-2" />

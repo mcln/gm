@@ -3,11 +3,11 @@
     <div class="div-ampliar mx-auto {{ $anchoCompleto ? '' : 'max-w-7xl' }} px-2 sm:px-6 lg:px-8 py-8"
         wire:className="{{ $anchoCompleto ? '' : 'max-w-7xl' }}">
 
-        <div class="flex rounded-lg bg-azul-oscuro py-2 px-4 items-center justify-center space-x-2">
+        <div class="flex rounded-lg bg-azul-bonito py-2 px-4 items-center justify-center space-x-2">
 
             @if (isset($previous_exercise))
                 <a href="{{ route('exercises.show', $previous_exercise->id) }}"
-                    class="inline-flex items-center bg-azul-oscuro hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full">
+                    class="inline-flex items-center bg-azul-bonito hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="#ffffff">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
@@ -18,7 +18,7 @@
 
             @if (isset($next_exercise))
                 <a href="{{ route('exercises.show', $next_exercise->id) }}"
-                    class="inline-flex items-center bg-azul-oscuro hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full">
+                    class="inline-flex items-center bg-azul-bonito hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full">
                     Ejercicio Siguiente
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="#ffffff">
                         <path fill-rule="evenodd"
@@ -33,7 +33,7 @@
 
         <div class="mb-4"></div>
 
-        <div class="rounded-lg bg-azul-oscuro py-4 px-4 mb-4">
+        <div class="rounded-lg bg-azul-bonito py-4 px-4 mb-4">
             <div class="flex justify-between">
                 <div class="flex">
 

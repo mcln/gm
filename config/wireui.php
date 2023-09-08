@@ -189,11 +189,11 @@ return [
         ],
         'modal' => [
             'class' => Components\Modal::class,
-            'alias' => 'modal',
+            'alias' => 'wui.modal',
         ],
         'modal.card' => [
             'class' => Components\ModalCard::class,
-            'alias' => 'modal.card',
+            'alias' => 'wui.modal.card',
         ],
         'dialog' => [
             'class' => Components\Dialog::class,

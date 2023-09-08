@@ -29,7 +29,7 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-azul-muyclaro dark:bg-gray-900">
         @livewire('navigation')
 
         <!-- Page Content -->

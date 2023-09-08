@@ -41,31 +41,51 @@ class TeacherController extends Controller
 
     public function updateProfileTeacher(Request $request)
     {
+
+        $request->validate([
+            'about' => 'required',
+            'specialty' => 'required',
+            'masters_diplomas' => 'required',
+            'experience' => 'required',
+        ], [
+            'about.required' => 'El campo "Acerca de mí" es obligatorio.',
+            'specialty.required' => 'El campo "Especialista en" es obligatorio.',
+            'masters_diplomas.required' => 'El campo "Másters o diplomas" es obligatorio.',
+            'experience.required' => 'El campo "Experiencia" es obligatorio.',
+        ]);
+
+        if ($request->fails()) {
+            return redirect()->back()->withErrors($request->errors())->withInput();
+        }
+
         // Obtener el usuario autenticado
         $userId = auth()->user()->id;
 
         // Obtener los datos del formulario
-        $degree = $request->input('degree');
-        $university = $request->input('university');
-        $country_residence = $request->input('country_residence');
         $about = $request->input('about');
         $specialty = $request->input('specialty');
         $masters_diplomas = $request->input('masters_diplomas');
         $experience = $request->input('experience');
 
-        // Crear un nuevo registro en la tabla "user_details"
-        $userDetail = new User_detail();
-        $userDetail->user_id = $userId;
-        $userDetail->degree = $degree;
-        $userDetail->university = $university;
-        $userDetail->country_residence = $country_residence;
-        $userDetail->about = $about;
-        $userDetail->specialty = $specialty;
-        $userDetail->masters_diplomas = $masters_diplomas;
-        $userDetail->experience = $experience;
+        $userDetail = User_detail::where('user_id', $userId)->first();
 
-        // Asociar el detalle de usuario al usuario actual
-        $userDetail->save();
+        if ($userDetail) {
+            $userDetail->about = $about;
+            $userDetail->specialty = $specialty;
+            $userDetail->masters_diplomas = $masters_diplomas;
+            $userDetail->experience = $experience;
+            $userDetail->save();
+        } else {
+            $userDetail = new User_detail();
+            $userDetail->user_id = $userId;
+            $userDetail->about = $about;
+            $userDetail->specialty = $specialty;
+            $userDetail->masters_diplomas = $masters_diplomas;
+            $userDetail->experience = $experience;
+
+            // Asociar el detalle de usuario al usuario actual
+            $userDetail->save();
+        }
 
         // Redirigir a una página de éxito o a donde desees
         return redirect()->back()->with('success', 'Archivo subido correctamente.');
