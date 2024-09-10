@@ -11,6 +11,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UploadExerciseController;
 use App\Http\Livewire\ExerciseUploadForm;
+use App\Http\Controllers\UniversityController;
 
 //INDEX
 Route::get('/filepond', function () {return view('enconstruccion');});
@@ -32,6 +33,10 @@ Route::get('/chapters/{chapter?}', [ExerciseController::class, 'chapter'])->name
 Route::get('/sections/{section?}', [ExerciseController::class, 'section'])->name('exercises.section');
 Route::get('/items/{item?}', [ExerciseController::class, 'item'])->name('exercises.item');
 Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('exercises.show');
+
+//UNIVERSIDADES
+Route::get('/countries', [UniversityController::class, 'index'])->name('countries.index');
+Route::get('/universities/certamen/{exercise_id}', [UniversityController::class, 'showCertamen'])->name('universities.certamen');
 
 //EJERCICIOS SELECCIONADOS DE USUARIO
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {

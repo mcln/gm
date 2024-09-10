@@ -9,16 +9,17 @@ class University extends Model
 {
     use HasFactory;
 
-    //relacion 1 a 1
-    public function address(){
+    protected $fillable = ['name', 'country_id'];
 
-        return $this->hasOne('App\Models\Address');
-
+    // Relación con subjects
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
     }
 
-    public function degrees(){
-
-        return $this->hasMany('App\Models\Degree');
-
+    // Relación con exercise_universities
+    public function exerciseUniversities()
+    {
+        return $this->hasMany(ExerciseUniversity::class);
     }
 }

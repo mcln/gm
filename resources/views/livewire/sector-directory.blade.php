@@ -56,10 +56,16 @@
                                 @foreach ($section->items as $item)
                                     <!-- Mostramos el nombre del ítem actual de la sección actual -->
                                     <!-- ITEMS -->
-                                    <div class="text-xs">
+                                    {{-- <div class="text-xs">
                                         <a href="{{ route('exercises.item', ['item' => $item->id]) }}"
                                             class="hover:text-morado-normal">
                                             <span class="text-gray-500 font-bold">{{ $itemNumberInSection++ }}.</span>
+                                            {{ $item->name }}
+                                        </a>
+                                    </div> --}}
+                                    <div class="text-xs" style="display: table;">
+                                        <span class="text-gray-500 font-bold" style="display: table-cell; padding-right: 10px;">{{ $itemNumberInSection++ }}.</span>
+                                        <a href="{{ route('exercises.item', ['item' => $item->id]) }}" class="hover:text-morado-normal" style="display: table-cell;">
                                             {{ $item->name }}
                                         </a>
                                     </div>
