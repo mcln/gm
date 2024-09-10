@@ -21,37 +21,7 @@ class UploadExerciseController extends Controller
         return view('exercises.upload', compact('sectors'));
     }
 
-    public function upload(Request $request)
-    {
-
-        $result = $request->file('file')->storeOnCloudinary('Upload/Headers');
-        $uploadedFileUrl = $result->getSecurePath();
-
-        // Obtener el ID del usuario actualmente autenticado
-        $userId = auth()->user()->id;
-
-        // Crear una nueva instancia de UploadExercise y asignar los valores
-        $uploadExercise = new UploadExercise();
-        $uploadExercise->user_id = $userId;
-        $uploadExercise->url = $uploadedFileUrl;
-
-        $fechaEntrega = Carbon::parse($request->input('fecha_entrega'))->setTime(23, 59, 0);
-        $uploadExercise->time_max_accept = $fechaEntrega;
-
-        $uploadExercise->suggested_value_usd = $request->input('valor_pagar');
-
-        // Obtener el nombre del sector del formulario
-        $sectorName = $request->input('mat_sector');
-        $sector = Sector::where('name', $sectorName)->first();
-        $uploadExercise->sector_id = $sector->id;
-
-        $uploadExercise->description = $request->input('descripcion');
-
-        // Guardar el objeto UploadExercise en la base de datos
-        $uploadExercise->save();
-
-        return redirect()->back()->with('success', 'Archivo subido correctamente.');
-    }
+    
 
     public function uploadUser()
     {

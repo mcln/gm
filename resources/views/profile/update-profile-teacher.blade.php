@@ -1,10 +1,9 @@
 <x-AppLayout>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <h1 class="text-3xl text-center font-bold mb-10">Actualiza tus datos de profesor</h1>
 
         <form action="{{ route('profile.updateTeacher') }}" method="POST">
-            <h1 class="text-3xl font-bold mb-6">Actualiza tus datos de profesor</h1>
             @csrf
-
             <x-errors class="mb-6" />
 
             <x-card>
@@ -71,7 +70,8 @@
                         cornerHint="Cuentanos mas sobre ti...">{{ $user_details->about ?? '' }}
                         <x-slot name="prepend">
                             <div class="absolute inset-y-0">
-                                <x-button class="h-full bg-azul-bonito hover:bg-azul-bonito" icon="identification" blue />
+                                <x-button class="h-full bg-azul-bonito hover:bg-azul-bonito" icon="identification"
+                                    blue />
                             </div>
                         </x-slot>
                     </x-textarea>
@@ -80,7 +80,8 @@
                 <div class="mb-4"></div>
 
                 <x-slot name="footer">
-                    <x-button class="float-left mr-4 bg-azul-bonito hover:bg-azul-bonito" icon="identification" blue href="">Ver tu perfil publico</x-button>
+                    <x-button class="float-left mr-4 bg-azul-bonito hover:bg-azul-bonito" icon="identification" blue
+                        href="">Ver tu perfil publico</x-button>
                     <x-button type="submit" icon="document-add"
                         class="float-right bg-verde-electrico hover:bg-verde-limon text-white font-semibold px-4 py-2 rounded-md">Guardar</x-button>
                 </x-slot>
@@ -89,4 +90,5 @@
         </form>
 
     </div>
+
 </x-AppLayout>

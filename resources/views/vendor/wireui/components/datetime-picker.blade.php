@@ -157,17 +157,17 @@
                         :key="`date.${date.day}.${date.month}`"
                     >
                         <div class="flex justify-center picker-days">
-                            <button class="text-sm w-7 h-6 focus:outline-none rounded-md focus:ring-2 focus:ring-ofsset-2 focus:ring-primary-600
+                            <button class="text-sm w-7 h-6 focus:outline-none rounded-md focus:ring-2 focus:ring-ofsset-2 focus:ring-azul-electrico
                                          hover:bg-primary-100 dark:hover:bg-secondary-700 dark:focus:ring-secondary-400
                                           disabled:cursor-not-allowed"
                                 :class="{
                                     'text-secondary-600 dark:text-secondary-400': !date.isDisabled && !date.isSelected && date.month === month,
                                     'text-secondary-400 dark:text-secondary-600': date.isDisabled || date.month !== month,
-                                    'text-primary-600 border border-primary-600 dark:border-gray-400': date.isToday && !date.isSelected,
+                                    'text-azul-electrico border border-azul-electrico dark:border-gray-400': date.isToday && !date.isSelected,
                                     'disabled:text-primary-400 disabled:border-primary-400': date.isToday && !date.isSelected,
-                                    '!text-white bg-primary-600 font-semibold border border-primary-600': date.isSelected,
+                                    '!text-white bg-azul-electrico font-semibold border border-azul-electrico': date.isSelected,
                                     'disabled:bg-primary-400 disabled:border-primary-400': date.isSelected,
-                                    'hover:bg-primary-600 dark:bg-secondary-700 dark:border-secondary-400': date.isSelected,
+                                    'hover:bg-azul-electrico dark:bg-secondary-700 dark:border-secondary-400': date.isSelected,
                                 }"
                                 :disabled="date.isDisabled"
                                 x-on:click="selectDate(date)"
@@ -196,16 +196,16 @@
                 <template x-for="time in filteredTimes" :key="time.value">
                     <button class="group rounded-md focus:outline-none focus:bg-primary-100 dark:focus:bg-secondary-700
                                    relative py-2 pl-2 pr-9 text-left transition-colors ease-in-out duration-100 cursor-pointer select-none
-                                   hover:text-white hover:bg-primary-600 dark:hover:bg-secondary-700 dark:text-secondary-400"
+                                   hover:text-white hover:bg-azul-electrico dark:hover:bg-secondary-700 dark:text-secondary-400"
                             :class="{
-                            'text-primary-600': modelTime === time.value,
+                            'text-azul-electrico': modelTime === time.value,
                             'text-secondary-700': modelTime !== time.value,
                         }"
                         :name="`times.${time.value}`"
                         type="button"
                         x-on:click="selectTime(time)">
                         <span x-text="time.label"></span>
-                        <span class="text-primary-600 dark:text-secondary-400 group-hover:text-white
+                        <span class="text-azul-electrico dark:text-secondary-400 group-hover:text-white
                                      absolute inset-y-0 right-0 flex items-center pr-4"
                               x-show="modelTime === time.value">
                             <x-dynamic-component

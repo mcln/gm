@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('upload_exercises', function (Blueprint $table) {
             $table->timestamp('time_max_accept')->nullable();
             $table->decimal('suggested_value_usd', 4, 1)->nullable();
-            $table->integer('sector_id')->nullable();
+            $table->string('sector')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::table('upload_exercises', function (Blueprint $table) {
             $table->dropColumn('time_max_accept');
             $table->dropColumn('suggested_value_usd');
-            $table->dropColumn('sector_id');
+            $table->dropColumn('sector');
         });
     }
 };

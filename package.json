@@ -17,7 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "filepond": "^4.30.4",
+        "dropzone": "^6.0.0-beta.2",
         "sweetalert2": "^11.6.13"
     }
 }

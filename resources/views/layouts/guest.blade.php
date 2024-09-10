@@ -13,6 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        {{-- Favicon --}}
+        <link rel="icon" href="https://res.cloudinary.com/dbltc2gr7/image/upload/v1694464911/images_guiamath/favicon-16x16_mvqhrl.png" type="image/x-icon">
     </head>
     <body>
         <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">

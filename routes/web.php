@@ -10,6 +10,7 @@ use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UploadExerciseController;
+use App\Http\Livewire\ExerciseUploadForm;
 
 //INDEX
 Route::get('/filepond', function () {return view('enconstruccion');});
@@ -47,7 +48,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 //EJERCICIOS SUBIDOS A CLOUDINARY
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('exercise/upload', [UploadExerciseController::class, 'showUploadForm'])->name('upload.show');
-    Route::post('exercise/upload', [UploadExerciseController::class, 'upload'])->name('upload.upload');
+    Route::post('exercise/upload', [ExerciseUploadForm::class, 'upload'])->name('upload.upload');
 
     //vista de ejercicios enviados para alumnos
     Route::get('exercise/upload/user', [UploadExerciseController::class, 'uploadUser'])->name('exercises.uploadUser');

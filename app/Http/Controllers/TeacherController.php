@@ -47,16 +47,24 @@ class TeacherController extends Controller
             'specialty' => 'required',
             'masters_diplomas' => 'required',
             'experience' => 'required',
+            'file'  => 'require|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'about.required' => 'El campo "Acerca de mí" es obligatorio.',
             'specialty.required' => 'El campo "Especialista en" es obligatorio.',
             'masters_diplomas.required' => 'El campo "Másters o diplomas" es obligatorio.',
             'experience.required' => 'El campo "Experiencia" es obligatorio.',
+            'file.required' => 'El campo "Foto de perfil" es obligatorio.',
+            'file.image' => 'El campo "Foto de perfil" debe ser una imagen.',
+            'file.mimes' => 'El campo "Foto de perfil" debe ser un archivo de tipo: jpeg, png, jpg, gif, svg.',
+            'file.max' => 'El campo "Foto de perfil" debe ser menor a 2MB.',
         ]);
 
         if ($request->fails()) {
             return redirect()->back()->withErrors($request->errors())->withInput();
         }
+
+        $result = $request->file('file')->storeOnCloudinary('Upload/Headers');
+        $uploadedFileUrl = $result->getSecurePath();
 
         // Obtener el usuario autenticado
         $userId = auth()->user()->id;
@@ -74,6 +82,7 @@ class TeacherController extends Controller
             $userDetail->specialty = $specialty;
             $userDetail->masters_diplomas = $masters_diplomas;
             $userDetail->experience = $experience;
+            $userDetail->example_exerc_photo1 = $uploadedFileUrl;
             $userDetail->save();
         } else {
             $userDetail = new User_detail();
@@ -82,12 +91,11 @@ class TeacherController extends Controller
             $userDetail->specialty = $specialty;
             $userDetail->masters_diplomas = $masters_diplomas;
             $userDetail->experience = $experience;
+            $userDetail->example_exerc_photo1 = $uploadedFileUrl;
 
             // Asociar el detalle de usuario al usuario actual
             $userDetail->save();
         }
 
-        // Redirigir a una página de éxito o a donde desees
-        return redirect()->back()->with('success', 'Archivo subido correctamente.');
     }
 }

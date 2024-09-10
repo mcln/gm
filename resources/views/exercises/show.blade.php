@@ -1,9 +1,9 @@
 <x-AppLayout>
     @php $anchoCompleto = false; @endphp
-    <div class="div-ampliar mx-auto {{ $anchoCompleto ? '' : 'max-w-7xl' }} px-2 sm:px-6 lg:px-8 py-8"
+    <div class="div-ampliar mx-auto {{ $anchoCompleto ? '' : 'max-w-7xl' }} px-2 sm:px-6 lg:px-8 py-4"
         wire:className="{{ $anchoCompleto ? '' : 'max-w-7xl' }}">
 
-        <div class="flex rounded-lg bg-azul-bonito py-2 px-4 items-center justify-center space-x-2">
+        <div class="flex rounded-lg bg-azul-bonito py-2 px-2 items-center justify-center space-x-2">
 
             @if (isset($previous_exercise))
                 <a href="{{ route('exercises.show', $previous_exercise->id) }}"
@@ -12,14 +12,14 @@
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
                             clip-rule="evenodd" />
-                    </svg> Ejercicio Anterior
+                    </svg><span class="hidden sm:block">Ejercicio Anterior</span><span class="sm:hidden">Ej. Anterior</span>
                 </a>
             @endif
 
             @if (isset($next_exercise))
                 <a href="{{ route('exercises.show', $next_exercise->id) }}"
                     class="inline-flex items-center bg-azul-bonito hover:bg-azul-electrico text-white font-bold py-1 px-3 rounded-full">
-                    Ejercicio Siguiente
+                    <span class="hidden sm:block">Ejercicio Siguiente</span><span class="sm:hidden">Ej. Siguiente</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="#ffffff">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
@@ -31,15 +31,15 @@
         </div>
 
 
-        <div class="mb-4"></div>
+        <div class="mb-2"></div>
 
         <div class="rounded-lg bg-azul-bonito py-4 px-4 mb-4">
-            <div class="flex justify-between">
+            <div class="flex justify-between mb-4">
                 <div class="flex">
 
                     @livewire('expand-button', ['anchoCompleto' => $anchoCompleto])
 
-                    <livewire:video-button />
+                    @livewire('video-button')
 
                     @livewire('like-button', ['exercise' => $exercise])
 
@@ -49,34 +49,67 @@
 
                 </div>
                 <div class="flex items-center">
-                    <a href="{{ route('exercises.item', $exercise->item->id) }}"
-                        class="flex items-center bg-azul-claro hover:bg-azul-muyclaro text-azul-oscuro font-bold py-1 px-3 rounded-full mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="#0F4069" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                        </svg>
-                        <span>Volver</span>
-                    </a>
-                    <a href="{{ route('exercises.sector', $exercise->item->section->chapter->sector->id) }}"
-                        class="flex items-center bg-azul-claro hover:bg-azul-muyclaro text-azul-oscuro font-bold py-1 px-3 rounded-full mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 " fill="none" viewBox="0 0 24 24"
-                            stroke="#0F4069" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        <span>Cerrar</span>
-                    </a>
+
+                    {{-- boton para web y tablets --}}
+                    <div class="hidden sm:block">
+                        <x-button xs rounded href="{{ route('exercises.item', $exercise->item->id) }}"
+                            class="bg-azul-claro hover:bg-azul-muyclaro text-azul-bonito font-bold mr-2 border-none w-22">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                viewBox="0 0 24 24" stroke="#0F4069" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg>Volver
+                        </x-button>
+
+                        <x-button xs rounded
+                            href="{{ route('exercises.sector', $exercise->item->section->chapter->sector->id) }}"
+                            class="bg-azul-claro hover:bg-azul-muyclaro text-azul-bonito font-bold mr-2 border-none w-22">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 " fill="none" viewBox="0 0 24 24"
+                                stroke="#0F4069" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>Cerrar
+                        </x-button>
+                    </div>
+
+                    {{-- boton para mobiles --}}
+                    <div class="sm:hidden">
+                        <x-button.circle xs rounded href="{{ route('exercises.item', $exercise->item->id) }}"
+                            class="bg-azul-claro hover:bg-azul-muyclaro text-azul-bonito font-bold mr-2 border-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="#0F4069" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg>
+                        </x-button.circle>
+
+                        <x-button.circle xs rounded
+                            href="{{ route('exercises.sector', $exercise->item->section->chapter->sector->id) }}"
+                            class="bg-azul-claro hover:bg-azul-muyclaro text-azul-bonito font-bold mr-2 border-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="#0F4069" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </x-button.circle>
+                    </div>
+
+
                 </div>
             </div>
 
-            <div class="flex flex-row justify-center items-center mt-4">
-
-            </div>
             <div class="image-section rounded-lg w-400 flex items-center"
                 style="background-image: url({{ asset(Storage::url($background_cuadros->image_path ?? '')) }})">
                 @empty(!$header_exercise)
-                    <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10"
-                        oncontextmenu="return false;">
+                    {{-- vista de encabezado para web y tablets --}}
+                    <div class="hidden sm:block">
+                        <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt="" class="ml-10"
+                            oncontextmenu="return false;">
+                    </div>
+
+                    {{-- vista de encabezado para mobiles --}}
+                    <div class="sm:hidden">
+                        <img src="{{ asset(Storage::url($header_exercise->image_path)) }}" alt=""
+                            class="object-fill w-full h-full" oncontextmenu="return false;">
+                    </div>
                 @endempty
             </div>
 
@@ -88,15 +121,30 @@
                 </svg><span class="ml-4 font-bold italic text-azul-oscuro">Desarrollo</span>
             </div>
 
-            @foreach ($development_exercises as $development_exercise)
-                <div class="image-section rounded-lg w-400 h-300 flex items-center mt-1"
-                    style="background-image: url({{ asset(Storage::url($background_cuaderno->image_path ?? '')) }})">
-                    @if (!empty($development_exercise))
-                        <img src="{{ asset(Storage::url($development_exercise->image_path)) }}" alt=""
-                            class="ml-12" oncontextmenu="return false;">
-                    @endif
-                </div>
-            @endforeach
+            {{-- vista de desarrollo para web y tablets --}}
+            <div class="hidden sm:block">
+                @foreach ($development_exercises as $development_exercise)
+                    <div class="image-section rounded-lg w-400 h-300 flex items-center mt-1"
+                        style="background-image: url({{ asset(Storage::url($background_cuaderno->image_path ?? '')) }})">
+                        @if (!empty($development_exercise))
+                            <img src="{{ asset(Storage::url($development_exercise->image_path)) }}" alt=""
+                                class="ml-12" oncontextmenu="return false;">
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- vista de desarrollo para mobiles --}}
+            <div class="sm:hidden">
+                @foreach ($development_exercises as $development_exercise)
+                    <div class="image-section rounded-lg w-400 h-300 flex items-center mt-1 overflow-hidden">
+                        @if (!empty($development_exercise))
+                            <img src="{{ asset(Storage::url($development_exercise->image_path)) }}" alt=""
+                                class="object-cover w-full h-full" oncontextmenu="return false;">
+                        @endif
+                    </div>
+                @endforeach
+            </div>
         </div>
 
         @if (Auth::check())

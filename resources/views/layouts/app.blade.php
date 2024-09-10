@@ -12,10 +12,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    {{-- Filepond --}}
-    {{-- <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"> --}}
-
     {{-- WireUI --}}
     @wireUiScripts
 
@@ -24,6 +20,11 @@
 
     <!-- Styles -->
     @livewireStyles
+
+    {{-- Favicon --}}
+    <link rel="icon" href="https://res.cloudinary.com/dbltc2gr7/image/upload/v1694464911/images_guiamath/favicon-16x16_mvqhrl.png" type="image/x-icon">
+
+    @yield('css')
 </head>
 
 <body class="font-sans antialiased">
@@ -42,13 +43,7 @@
 
     @livewireScripts
 
-    {{-- filepond --}}
-    {{-- <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-
-    <script>
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-    </script> --}}
+    @yield('js')
 </body>
 
 </html>
