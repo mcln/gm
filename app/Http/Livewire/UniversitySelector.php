@@ -9,73 +9,120 @@ use App\Models\Subject;
 use App\Models\Type;
 use App\Models\Semester;
 use App\Models\ExerciseUniversity;
+use Illuminate\Support\Collection;
 
 class UniversitySelector extends Component
 {
     public $countries;
-    public $universities = [];
-    public $subjects = [];
-    public $types = [];
-    public $semesters = [];
-    public $selectedCountry;
-    public $selectedUniversity;
+    public $universities;
+    public $subjects;
+    public $types;
+    public $semesters;
+    public $selectedCountry = 41; // Chile por defecto
+    public $selectedUniversity = 1; // Universidad por defecto
     public $selectedSubject;
-    public $selectedType;
-    public $semesterData = []; // Añadido para almacenar los datos de semestres
+    public $listData = []; // Aquí guardamos los listados de todos los tipos
 
     public function mount()
     {
         $this->countries = Country::orderByRaw('id = 41 DESC')->get();
+        $this->universities = collect();
+        $this->subjects = collect();
+        $this->types = Type::all(); // Cargamos los tipos en el mount
+        $this->updatedSelectedCountry($this->selectedCountry);
+        $this->updatedSelectedUniversity($this->selectedUniversity);
     }
 
     public function updatedSelectedCountry($countryId)
     {
         $this->universities = University::where('country_id', $countryId)->get();
-        $this->subjects = [];
-        $this->types = [];
-        $this->semesterData = []; // Limpiar datos de semestres
+        $this->subjects = collect();
+        $this->listData = [];
+
+        if (!$this->universities->contains('id', $this->selectedUniversity)) {
+            $this->selectedUniversity = null;
+        }
     }
 
     public function updatedSelectedUniversity($universityId)
     {
-        $this->subjects = Subject::where('university_id', $universityId)->get();
-        $this->types = [];
-        $this->semesterData = []; // Limpiar datos de semestres
+        if ($universityId) {
+            $this->subjects = Subject::where('university_id', $universityId)->get();
+            $this->listData = [];
+        }
     }
 
     public function updatedSelectedSubject($subjectId)
     {
-        $this->types = Type::all();
-        $this->semesterData = []; // Limpiar datos de semestres
+        $this->listData = [];
+
+        // Cargar listados de Certámenes y Guías automáticamente
+        $this->loadCertamenes();
+        $this->loadGuias();
+        $this->loadControles();
     }
 
-    public function updatedSelectedType($typeId)
+    private function loadCertamenes()
     {
-        // Verificar si el tipo es un certamen
-        if ($typeId == 1) {
-            $exercises = ExerciseUniversity::where('university_id', $this->selectedUniversity)
-                ->where('subject_id', $this->selectedSubject)
-                ->where('type_id', $typeId)
-                ->whereNull('parent_id')
-                ->get();
+        $exercises = ExerciseUniversity::where('university_id', $this->selectedUniversity)
+            ->where('subject_id', $this->selectedSubject)
+            ->where('type_id', 1) // Certámenes
+            ->whereNull('parent_id')
+            ->get();
 
-            $semesterIds = $exercises->pluck('semester_id')->unique();
+        $certamenes = $exercises->map(function ($exercise) {
+            $semester = $exercise->semester;
+            return [
+                'type' => 'Certamen',
+                'year' => $semester->year,
+                'period' => $semester->period,
+                'exercise_id' => $exercise->id,
+                'route' => route('universities.certamen', ['exercise_id' => $exercise->id]),
+                'name' => "{$semester->period} - {$semester->year}"
+            ];
+        })->toArray();
 
-            // Obtener los datos de los semestres junto con los paths de los PDF
-            $this->semesterData = $exercises->map(function ($exercise) {
-                $header = $exercise->headerExUniversity; // Asume que tienes una relación definida en el modelo
-                $semester = $exercise->semester;
+        $this->listData = array_merge($this->listData, $certamenes);
+    }
 
-                return [
-                    'year' => $semester->year,
-                    'period' => $semester->period,
-                    'image_path' => $header->image_path, // Ruta del PDF
-                    'exercise_id' => $exercise->id // ID del ejercicio
-                ];
-            });
-        } else {
-            $this->semesterData = [];
-        }
+    private function loadGuias()
+    {
+        $guias = ExerciseUniversity::where('university_id', $this->selectedUniversity)
+            ->where('subject_id', $this->selectedSubject)
+            ->where('type_id', 3) // Guías
+            ->whereNull('parent_id')
+            ->get();
+
+        $guiaData = $guias->map(function ($guia) {
+            return [
+                'type' => 'Guía',
+                'exercise_id' => $guia->id,
+                'route' => route('universities.guia', ['id' => $guia->id]),
+                'name' => $guia->name
+            ];
+        })->toArray();
+
+        $this->listData = array_merge($this->listData, $guiaData);
+    }
+
+    private function loadControles()
+    {
+        $controles = ExerciseUniversity::where('university_id', $this->selectedUniversity)
+            ->where('subject_id', $this->selectedSubject)
+            ->where('type_id', 2) // Controles
+            ->whereNull('parent_id')
+            ->get();
+
+        $controlData = $controles->map(function ($control) {
+            return [
+                'type' => 'Control',
+                'exercise_id' => $control->id,
+                'route' => route('universities.control', ['id' => $control->id]),
+                'name' => $control->name
+            ];
+        })->toArray();
+
+        $this->listData = array_merge($this->listData, $controlData);
     }
 
     public function render()

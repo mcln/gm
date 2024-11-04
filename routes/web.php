@@ -16,27 +16,29 @@ use App\Http\Controllers\UniversityController;
 //INDEX
 Route::get('/filepond', function () {return view('enconstruccion');});
 
-Route::get('/', [ExerciseController::class, 'index'])->name('exercises.index');
-Route::get('nosotros', [ImageController::class, 'nosotros'])->name('nosotros');
-Route::get('planes', [ImageController::class, 'planes'])->name('planes');
+Route::get('/',                                     [ExerciseController::class, 'index'])->                     name('exercises.index');
+Route::get('nosotros',                              [ImageController::class, 'nosotros'])->                     name('nosotros');
+Route::get('planes',                                [ImageController::class, 'planes'])->                       name('planes');
 
 //CONTACTO
-Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.mostrarFormulario');
-Route::post('/contacto', [ContactoController::class, 'enviarMensaje'])->name('contacto.enviarMensaje');
+Route::get('/contacto',                             [ContactoController::class, 'mostrarFormulario'])->         name('contacto.mostrarFormulario');
+Route::post('/contacto',                            [ContactoController::class, 'enviarMensaje'])->             name('contacto.enviarMensaje');
 
 //BUSCADOR
-Route::get('/search', [SearchController::class, 'searchExercises'])->name('search');
+Route::get('/search',                               [SearchController::class, 'searchExercises'])->             name('search');
 
 //EJERCICIOS
-Route::get('/sectors/{sector?}', [ExerciseController::class, 'sector'])->name('exercises.sector');
-Route::get('/chapters/{chapter?}', [ExerciseController::class, 'chapter'])->name('exercises.chapter');
-Route::get('/sections/{section?}', [ExerciseController::class, 'section'])->name('exercises.section');
-Route::get('/items/{item?}', [ExerciseController::class, 'item'])->name('exercises.item');
-Route::get('exercises/{exercise}', [ExerciseController::class, 'show'])->name('exercises.show');
+Route::get('/sectors/{sector?}',                    [ExerciseController::class, 'sector'])->                    name('exercises.sector');
+Route::get('/chapters/{chapter?}',                  [ExerciseController::class, 'chapter'])->                   name('exercises.chapter');
+Route::get('/sections/{section?}',                  [ExerciseController::class, 'section'])->                   name('exercises.section');
+Route::get('/items/{item?}',                        [ExerciseController::class, 'item'])->                      name('exercises.item');
+Route::get('exercises/{exercise}',                  [ExerciseController::class, 'show'])->                      name('exercises.show');
 
 //UNIVERSIDADES
-Route::get('/countries', [UniversityController::class, 'index'])->name('countries.index');
-Route::get('/universities/certamen/{exercise_id}', [UniversityController::class, 'showCertamen'])->name('universities.certamen');
+Route::get('/countries',                            [UniversityController::class, 'index'])->                   name('countries.index');
+Route::get('/universities/certamen/{exercise_id}',  [UniversityController::class, 'showCertamen'])->            name('universities.certamen');
+Route::get('/universities/guia/{id}',               [UniversityController::class, 'showGuia'])->                name('universities.guia');
+Route::get('/universities/exercises/{exercise_id}', [UniversityController::class, 'showDevelopmentExercises'])->name('universities.show');
 
 //EJERCICIOS SELECCIONADOS DE USUARIO
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {

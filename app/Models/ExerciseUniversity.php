@@ -14,6 +14,8 @@ class ExerciseUniversity extends Model
         'semester_id',
         'parent_id',
         'slug',
+        'name',
+        'item_id',
         'active',
         'order',
         'view_count',
@@ -67,5 +69,11 @@ class ExerciseUniversity extends Model
     public function developmentExUniversities()
     {
         return $this->hasMany(DevelopmentExUniversity::class);
+    }
+
+    // Define la relación con el modelo Item
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

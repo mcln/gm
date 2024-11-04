@@ -12,16 +12,21 @@ class Item extends Model
     use Searchable;
 
     //relacion 1 a 1
-    public function section(){
+    public function section()
+    {
 
         return $this->belongsTo('App\Models\Section');
-
     }
 
-    public function exercises(){
+    public function exercises()
+    {
 
         return $this->hasMany('App\Models\Exercise');
+    }
 
+    public function exerciseUniversities()
+    {
+        return $this->hasMany(ExerciseUniversity::class, 'item_id');
     }
 
     public function toSearchableArray()
